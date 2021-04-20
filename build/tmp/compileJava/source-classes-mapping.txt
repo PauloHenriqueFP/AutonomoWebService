@@ -1,0 +1,72 @@
+com/empresax/autonomo/api/request/PhoneRequest.java
+ com.empresax.autonomo.api.request.PhoneRequest
+com/empresax/autonomo/model/Address.java
+ com.empresax.autonomo.model.Address
+com/empresax/autonomo/api/request/AddressRequest.java
+ com.empresax.autonomo.api.request.AddressRequest
+com/empresax/autonomo/api/response/ClientResponse.java
+ com.empresax.autonomo.api.response.ClientResponse
+com/empresax/autonomo/service/ProductService.java
+ com.empresax.autonomo.service.ProductService
+com/empresax/autonomo/api/request/UserRequest.java
+ com.empresax.autonomo.api.request.UserRequest
+com/empresax/autonomo/api/response/ProductResponse.java
+ com.empresax.autonomo.api.response.ProductResponse
+com/empresax/autonomo/api/request/ProductRequest.java
+ com.empresax.autonomo.api.request.ProductRequest
+com/empresax/autonomo/service/ClientService.java
+ com.empresax.autonomo.service.ClientService
+com/empresax/autonomo/api/request/ClientRequest.java
+ com.empresax.autonomo.api.request.ClientRequest
+com/empresax/autonomo/model/Supplier.java
+ com.empresax.autonomo.model.Supplier
+com/empresax/autonomo/exception/NullEntityException.java
+ com.empresax.autonomo.exception.NullEntityException
+com/empresax/autonomo/api/exceptionhandler/EntityNotFoundHandler.java
+ com.empresax.autonomo.api.exceptionhandler.EntityNotFoundHandler
+com/empresax/autonomo/repository/SupplierRepository.java
+ com.empresax.autonomo.repository.SupplierRepository
+com/empresax/autonomo/service/UserService.java
+ com.empresax.autonomo.service.UserService
+com/empresax/autonomo/api/controller/UserController.java
+ com.empresax.autonomo.api.controller.UserController
+com/empresax/autonomo/model/OrderItem.java
+ com.empresax.autonomo.model.OrderItem
+com/empresax/autonomo/model/Phone.java
+ com.empresax.autonomo.model.Phone
+com/empresax/autonomo/api/response/OrderResponse.java
+ com.empresax.autonomo.api.response.OrderResponse
+com/empresax/autonomo/model/Client.java
+ com.empresax.autonomo.model.Client
+com/empresax/autonomo/model/OrderStatus.java
+ com.empresax.autonomo.model.OrderStatus
+com/empresax/autonomo/api/controller/SupplierController.java
+ com.empresax.autonomo.api.controller.SupplierController
+com/empresax/autonomo/repository/ProductRepository.java
+ com.empresax.autonomo.repository.ProductRepository
+com/empresax/autonomo/api/controller/ProductController.java
+ com.empresax.autonomo.api.controller.ProductController
+com/empresax/autonomo/api/response/SupplierResponse.java
+ com.empresax.autonomo.api.response.SupplierResponse
+com/empresax/autonomo/repository/ClientRepository.java
+ com.empresax.autonomo.repository.ClientRepository
+com/empresax/autonomo/api/request/OrderRequest.java
+ com.empresax.autonomo.api.request.OrderRequest
+com/empresax/autonomo/repository/UserRepository.java
+ com.empresax.autonomo.repository.UserRepository
+com/empresax/autonomo/model/Product.java
+ com.empresax.autonomo.model.Product
+com/empresax/autonomo/model/Order.java
+ com.empresax.autonomo.model.Order
+com/empresax/autonomo/GestaoMicroNegocioApplication.java
+ com.empresax.autonomo.GestaoMicroNegocioApplication
+com/empresax/autonomo/model/User.java
+ com.empresax.autonomo.model.User
+com/empresax/autonomo/service/SupplierService.java
+ com.empresax.autonomo.service.SupplierService
+com/empresax/autonomo/api/request/SupplierRequest.java
+ com.empresax.autonomo.api.request.SupplierRequest
+com/empresax/autonomo/api/controller/ClientController.java
+ com.empresax.autonomo.api.controller.ClientController
+com/empresax/autonomo/repository/AddressRepository.java
+ com.empresax.autonomo.repository.AddressRepository
