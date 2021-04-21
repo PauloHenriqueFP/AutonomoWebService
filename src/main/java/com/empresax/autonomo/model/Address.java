@@ -20,6 +20,8 @@ public class Address {
 	
 	private String street;
 	
+	private String neighborhood;
+	
 	private String city;
 	
 	private Integer number;
@@ -27,11 +29,13 @@ public class Address {
 	private String cep;
 
 	public Address() {}
-	
-	public Address( String street,  String city,  Integer number,  String cep) {
+
+	public Address(String street, String neighborhood, String city, Integer number, String cep) {
 		this.street = street;
+		this.neighborhood = neighborhood;
 		this.city = city;
 		this.number = number;
 		this.cep = cep;
 	}
+	
 }

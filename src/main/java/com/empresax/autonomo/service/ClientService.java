@@ -40,6 +40,7 @@ public class ClientService {
 			Address newClientAddress = new Address();
 				newClientAddress.setStreet(clientRequest.getAddress().getStreet());
 				newClientAddress.setNumber(clientRequest.getAddress().getNumber());
+				newClientAddress.setNeighborhood(clientRequest.getAddress().getNeighborhood());
 				newClientAddress.setCity(clientRequest.getAddress().getCity());
 				newClientAddress.setCep(clientRequest.getAddress().getCep());
 				

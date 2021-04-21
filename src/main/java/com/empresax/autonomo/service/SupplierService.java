@@ -52,6 +52,7 @@ public class SupplierService {
 		Address newSupplierAddress = new Address();
 			newSupplierAddress.setStreet(supplierRequest.getAddress().getStreet());
 			newSupplierAddress.setNumber(supplierRequest.getAddress().getNumber());
+			newSupplierAddress.setNeighborhood(supplierRequest.getAddress().getNeighborhood());
 			newSupplierAddress.setCity(supplierRequest.getAddress().getCity());
 			newSupplierAddress.setCep(supplierRequest.getAddress().getCep());
 		

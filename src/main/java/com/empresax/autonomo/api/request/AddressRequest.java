@@ -14,6 +14,9 @@ public class AddressRequest {
 	@NotBlank
 	private String city;
 	
+	@NotBlank
+	private String neighborhood;
+	
 	@NotNull
 	private Integer number;
 	
@@ -22,11 +25,15 @@ public class AddressRequest {
 	
 	public AddressRequest() {}
 
-	public AddressRequest(String street, String city, Integer number, String cep) {
+	public AddressRequest(@NotBlank String street, @NotBlank String city, @NotBlank String neighborhood,
+			@NotNull Integer number, @NotBlank String cep) {
 		this.street = street;
 		this.city = city;
+		this.neighborhood = neighborhood;
 		this.number = number;
 		this.cep = cep;
 	}
+
+	
 
 }
