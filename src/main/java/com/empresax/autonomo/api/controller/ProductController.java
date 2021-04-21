@@ -39,28 +39,32 @@ public class ProductController {
 	
 	@GetMapping("/{productId}")
 	public ResponseEntity<ProductResponse> getUserProduct(@PathVariable(required = true) Long userId,
-												  @PathVariable(required = true) Long productId) {
+														  @PathVariable(required = true) Long productId) {
+
 		Product product = this.productService.getProduct(userId, productId);
+
 		ProductResponse response = mapProduct(product);
+
 		return ResponseEntity.ok(response);
 	}
 	
 	@PostMapping
 	public ResponseEntity<ProductResponse> saveProduct(@PathVariable Long userId,
-											   @RequestBody ProductRequest productRequest) {
+													   @RequestBody ProductRequest productRequest) {
 		
 		Product savedProduct = this.productService.saveUserProduct(userId, productRequest);
 		
 		ProductResponse response = mapProduct(savedProduct);
 
-		
 		return new ResponseEntity<ProductResponse>(response, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{productId}")
 	public ResponseEntity<Void> deleteProduct(@PathVariable(required = true, name = "userId") Long userId,
-											@PathVariable(required = true, name = "productId") Long productId) {
+											  @PathVariable(required = true, name = "productId") Long productId) {
+
 		this.productService.deleteProduct(userId, productId);
+
 		return ResponseEntity.noContent().build();
 	}
 	
