@@ -21,10 +21,9 @@ public class ProductService {
 	private final SupplierService supplierService;
 
 	@Autowired
-	public ProductService(
-							ProductRepository productRepository,
-							UserService userService,
-							SupplierService supplierService) {
+	public ProductService(ProductRepository productRepository,
+						  UserService userService,
+						  SupplierService supplierService) {
 		
 		this.productRepository = productRepository;
 		this.userService = userService;

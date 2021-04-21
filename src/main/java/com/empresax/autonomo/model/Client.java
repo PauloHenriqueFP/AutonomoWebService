@@ -51,8 +51,12 @@ public class Client {
 
 	public Client() {}
 
-	public Client(@NotEmpty String name, @Email String email, @NotEmpty String cpf, @NotEmpty String phone,
-			Address address) {
+	public Client(@NotEmpty String name, 
+				  @Email String email, 
+				  @NotEmpty String cpf, 
+				  @NotEmpty String phone,
+				  @Valid Address address) {
+		
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;

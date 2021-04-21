@@ -44,7 +44,7 @@ public class ClientController {
 
 	@GetMapping("/{clientId}")
 	public ResponseEntity<ClientResponse> getClient(@PathVariable(required = true) Long userId,
-											@PathVariable(required = true) Long clientId) {
+													@PathVariable(required = true) Long clientId) {
 
 		Client client = this.clientService.getClient(userId, clientId);
 		ClientResponse response = mapClient(client);
@@ -54,7 +54,7 @@ public class ClientController {
 
 	@PostMapping
 	public ResponseEntity<ClientResponse> saveClient(@PathVariable(required = true) Long userId,
-											 @Valid @RequestBody ClientRequest clientRequest) {
+											 		 @Valid @RequestBody ClientRequest clientRequest) {
 
 		Client savedClient = this.clientService.saveUserClient(userId, clientRequest);
 		ClientResponse response = mapClient(savedClient);

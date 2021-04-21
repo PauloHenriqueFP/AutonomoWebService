@@ -28,10 +28,11 @@ public class SupplierController {
 	private SupplierService supplierService;
 	
 	@GetMapping
-	public ResponseEntity<List<SupplierResponse>> getAllSuppliers(@PathVariable(required = true) Long userId){
+	public ResponseEntity<List<SupplierResponse>> getAllSuppliers(@PathVariable(required = true, name = "userId") Long userId){
+		
 		List<SupplierResponse> providers = this.supplierService.getAllSuppliers(userId)
 				.stream()
-				.map( supplier -> mapSupplier(supplier))
+				.map( supplier -> mapSupplier(supplier) )
 				.collect( Collectors.toList() );
 		
 		return new ResponseEntity<List<SupplierResponse>>(providers, HttpStatus.OK);
@@ -39,7 +40,8 @@ public class SupplierController {
 	
 	@GetMapping("/{supplierId}")
 	public ResponseEntity<SupplierResponse> getSupplier(@PathVariable(required = true, name = "userId") Long userId,
-												@PathVariable(required = true, name = "supplierId") Long supplierId) {
+														@PathVariable(required = true, name = "supplierId") Long supplierId) {
+		
 		Supplier supplier = this.supplierService.getSupplier(userId, supplierId);
 		
 		SupplierResponse response = mapSupplier(supplier);
@@ -48,8 +50,9 @@ public class SupplierController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<SupplierResponse> saveSupplier(@PathVariable(required = true) Long userId,
-												 @Valid @RequestBody SupplierRequest supplierRequest) {
+	public ResponseEntity<SupplierResponse> saveSupplier(@PathVariable(required = true, name = "userId") Long userId,
+												 		 @Valid @RequestBody SupplierRequest supplierRequest) {
+		
 		Supplier savedSupplier = this.supplierService.save(userId, supplierRequest);
 		
 		SupplierResponse response = mapSupplier(savedSupplier);
@@ -59,7 +62,7 @@ public class SupplierController {
 	
 	@DeleteMapping("/{supplierId}")
 	public ResponseEntity<Void> deleteSupplier(@PathVariable(required = true, name = "userId") Long userId,
-											@PathVariable(required = true, name = "supplierId") Long supplierId) {
+											   @PathVariable(required = true, name = "supplierId") Long supplierId) {
 		
 		this.supplierService.deleteById(userId, supplierId);
 		
