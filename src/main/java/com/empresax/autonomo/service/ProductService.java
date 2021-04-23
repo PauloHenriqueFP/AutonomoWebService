@@ -31,9 +31,9 @@ public class ProductService {
 	}
 	
 	public List<Product> getAllProducts(Long userId) {
-		User user = this.userService.getUserById(userId);
+		boolean userExists = this.userService.getUserById(userId) != null;
 		
-		if(user != null) {
+		if(userExists) {
 			return this.productRepository.findAllByUserId(userId);	
 		} else {
 			throw new RuntimeException("User with id " + userId + " was not found");
