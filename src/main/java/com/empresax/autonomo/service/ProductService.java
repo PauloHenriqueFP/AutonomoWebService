@@ -31,7 +31,13 @@ public class ProductService {
 	}
 	
 	public List<Product> getAllProducts(Long userId) {
-		return this.productRepository.findAllByUserId(userId);	
+		User user = this.userService.getUserById(userId);
+		
+		if(user != null) {
+			return this.productRepository.findAllByUserId(userId);	
+		} else {
+			throw new RuntimeException("User with id " + userId + " was not found");
+		}
 	}
 	
 	public Product getProduct(Long userId, Long productId) {
