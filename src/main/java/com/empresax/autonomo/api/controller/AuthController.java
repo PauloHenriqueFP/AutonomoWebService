@@ -36,14 +36,12 @@ public class AuthController {
 			
 			if(userWithEmailPassed.getPassword().equals(login.password)) {
 				
-				return ResponseEntity.ok(true);
+				return ResponseEntity.ok(userWithEmailPassed);
 				
-			} else {
-				
-				return ResponseEntity.ok(false);
-				
-			}
+			} 
 			
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect credentials");
+		
 		} catch (Exception e) {
 			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email do not exists");
