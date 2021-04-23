@@ -31,6 +31,11 @@ public class UserService {
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " was not found"));
 	}
 	
+	public User getUserByEmail(String email) throws Exception {
+		return this.userRepository.findByEmail(email)
+				.orElseThrow(() -> new Exception("Invalid email "));
+	}
+	
 	public List<User> getUsers() {
 		return this.userRepository.findAll();
 	}
