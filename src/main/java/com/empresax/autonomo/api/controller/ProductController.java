@@ -3,6 +3,8 @@ package com.empresax.autonomo.api.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,13 +53,31 @@ public class ProductController {
 	
 	@PostMapping
 	public ResponseEntity<ProductResponse> saveProduct(@PathVariable Long userId,
-													   @RequestBody ProductRequest productRequest) {
+													   @Valid @RequestBody ProductRequest productRequest) {
 		
 		Product savedProduct = this.productService.saveUserProduct(userId, productRequest);
 		
 		ProductResponse response = mapProduct(savedProduct);
 
 		return new ResponseEntity<ProductResponse>(response, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/{productId}")
+	public ResponseEntity<Void> updateProduct(@PathVariable(value = "userId", required = true) Long userId,
+											  @PathVariable(value = "productId", required = true) Long productId,
+											  @Valid @RequestBody ProductRequest productRequest) {
+		
+		boolean updateProduct = this.productService.updateProduct(userId, productId, productRequest);
+		
+		if(!updateProduct) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}
+		
+		
+		
 	}
 
 	@DeleteMapping("/{productId}")

@@ -74,6 +74,50 @@ public class ProductService {
 		
 	}
 	
+	public boolean updateProduct(Long userId, Long productId, ProductRequest productRequest) {
+		
+		boolean userExists = this.userService.getUserById(userId) != null;
+		
+		if(userExists) {
+			Long supplierAskedToSave = productRequest.getSupplierId();
+			
+			// if the user doesn't have a provider with the id asked to save
+			// the getProvider() will throw a exception
+			Supplier supplier = this.supplierService.getSupplier(userId, supplierAskedToSave);
+						
+			// If gets here, the user can save the product with its provider, because that provider id
+			// belongs to a provider that belong to that user
+			User user = this.userService.getUserById(userId);
+			
+			Product newProduct = 
+					new Product(
+						productRequest.getName(),
+						productRequest.getPrice(),
+						productRequest.getMeasurement(),
+						productRequest.getQuantity(),
+						productRequest.getDescription(),
+						user,
+						supplier
+					);
+			newProduct.setId(productId);
+			
+			try {
+				
+				this.productRepository.save(newProduct);
+				return true;
+				
+			} catch (Exception e) {
+				
+				return false;
+
+			}
+			
+		}
+		else {
+			throw new RuntimeException("User with id " + userId + " does not have a product with id " + productId);
+		}
+	}
+	
 	public void deleteProduct(Long userId, Long productId) {
 		boolean userExists = this.userService.getUserById(userId) != null;
 		
