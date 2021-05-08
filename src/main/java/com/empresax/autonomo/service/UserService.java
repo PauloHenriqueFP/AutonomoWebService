@@ -26,7 +26,7 @@ public class UserService {
 		this.userRepository.deleteById(id);
 	}
 	
-	public User getUserById(Long id) {
+	public User getUserById(Long id) throws RuntimeException {
 		return this.userRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User with id " + id + " was not found"));
 	}

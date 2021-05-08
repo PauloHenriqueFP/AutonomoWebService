@@ -82,7 +82,7 @@ public class ProductService {
 			Long supplierAskedToSave = productRequest.getSupplierId();
 			
 			// if the user doesn't have a provider with the id asked to save
-			// the getProvider() will throw a exception
+			// the getSupplier() will throw a exception
 			Supplier supplier = this.supplierService.getSupplier(userId, supplierAskedToSave);
 						
 			// If gets here, the user can save the product with its provider, because that provider id

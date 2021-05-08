@@ -55,12 +55,14 @@ public class Client {
 				  @Email String email, 
 				  @NotEmpty String cpf, 
 				  @NotEmpty String phone,
-				  @Valid Address address) {
+				  Address address,
+				  User user) {
 		
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
 		this.phone = phone;
 		this.address = address;
+		this.user = user;
 	}
 }

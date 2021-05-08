@@ -7,12 +7,19 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.empresax.autonomo.api.request.AddressRequest;
 import com.empresax.autonomo.api.request.ClientRequest;
 import com.empresax.autonomo.exception.NullEntityException;
 import com.empresax.autonomo.model.Address;
 import com.empresax.autonomo.model.Client;
 import com.empresax.autonomo.model.User;
 import com.empresax.autonomo.repository.ClientRepository;
+
+/**
+ * 
+ * @author Paulo Henrique Flausino Patarello
+ *
+ */
 
 @Service
 public class ClientService {
@@ -63,5 +70,68 @@ public class ClientService {
 
 	public List<Client> getAllClients(Long userId) {
 		return this.clientRepository.findAllByUserId(userId);
+	}
+	
+	public boolean deleteClientById(Long userId, Long clientId) {
+		
+		@SuppressWarnings("unused")
+		User userExists = this.userService.getUserById(userId); // If user does not exits, getUserById will throw an exception
+		
+		Client client = this.clientRepository.findByUserIdAndId(userId, clientId)
+					.orElse(null);
+		
+		if(client != null) {
+			this.clientRepository.deleteById(clientId);
+			return true;
+		}
+		else {
+			throw new RuntimeException("User with id " + userId + " does not have a client with id " + clientId);
+		}
+				
+	}
+
+	public Client updateClient(Long userId, Long clientId, ClientRequest clientRequest) {
+		
+		User user = this.userService.getUserById(userId); // If user does not exits, getUserById will throw an exception
+		
+		Client oldClient = this.clientRepository.findByUserIdAndId(userId, clientId).get();
+		
+		if(oldClient == null) {
+			throw new RuntimeException("User with id " + userId + " does not have a client with id " + clientId + " to update");
+		}
+		else {
+			  
+			AddressRequest addressRequest = clientRequest.getAddress();
+		
+			Address newAddress = new Address(
+					addressRequest.getStreet(),
+					addressRequest.getNeighborhood(),
+					addressRequest.getCity(),
+					addressRequest.getNumber(),
+					addressRequest.getCep()
+			);
+			newAddress.setId(oldClient.getAddress().getId());
+			
+			Client newClient = new Client(
+					clientRequest.getName(),
+					clientRequest.getEmail(),
+					clientRequest.getCpf(),
+					clientRequest.getPhone(),
+					newAddress,
+					user
+			); 
+			newClient.setId(clientId);
+			
+			try {
+				
+				return this.clientRepository.save(newClient);
+				
+			} catch (Exception e) {
+				
+				throw new RuntimeException("Error when trying to save the client:\n" + e.getStackTrace());
+				
+			}
+		}
+		
 	}
 }
