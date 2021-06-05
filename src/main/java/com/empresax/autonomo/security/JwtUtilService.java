@@ -17,6 +17,7 @@ public class JwtUtilService {
 	@Value("${autonomo.jwt.secret}")
 	private String secret;
 	
+	@SuppressWarnings("deprecation")
 	public String generate(Authentication authentication) {
 		
 		User user = (User) authentication.getPrincipal();
@@ -25,7 +26,6 @@ public class JwtUtilService {
 		Date iat = new Date();
 		Date exp = new Date( iat.getTime() + oneDay );
 		
-		@SuppressWarnings("deprecation")
 		String jwt = Jwts.builder()
 								.setIssuer("AutonomoWebService")
 								.setSubject(user.getId().toString())
@@ -35,6 +35,20 @@ public class JwtUtilService {
 								.compact();
 		
 		return String.format("Bearer %s", jwt);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public boolean isTokenValid(String token) {
+		try {
+			
+			Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+			return true;
+			
+		} catch (Exception e) {
+			
+			return false;
+			
+		}
 	}
 	
 }
