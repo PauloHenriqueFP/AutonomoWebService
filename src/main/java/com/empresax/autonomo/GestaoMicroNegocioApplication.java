@@ -9,7 +9,6 @@ public class GestaoMicroNegocioApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GestaoMicroNegocioApplication.class, args);
-		System.out.println(new BCryptPasswordEncoder(10).encode("aiaiaimeucaro"));
 	}
 
 }
