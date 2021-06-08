@@ -1,18 +1,27 @@
 package com.empresax.autonomo.security;
 
 import java.util.Date;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.model.User;
+import com.empresax.autonomo.repository.UserRepository;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class JwtUtilService {
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Value("${autonomo.jwt.secret}")
 	private String secret;
@@ -49,6 +58,35 @@ public class JwtUtilService {
 			return false;
 			
 		}
+	}
+	
+	public Optional<User> getUserBytoken(String token) {
+		
+		try {
+			
+			Jws<Claims> jws = Jwts.parserBuilder()
+				.setSigningKey(secret)
+				.build()
+				.parseClaimsJws(token);
+			
+		    // we can safely trust the JWT
+			Long id = Long.parseLong( jws.getBody().getSubject() );	
+			
+			Optional<User> user = this.userRepository.findById(id);
+			if(user.isPresent()) {
+				
+				return user;
+			
+			}
+			
+			return Optional.empty();
+			
+		} catch(JwtException e) {
+			
+			return Optional.empty();
+			
+		}
+		
 	}
 	
 }

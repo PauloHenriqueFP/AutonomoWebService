@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresax.autonomo.api.request.ProductRequest;
 import com.empresax.autonomo.api.response.ProductResponse;
 import com.empresax.autonomo.model.Product;
+import com.empresax.autonomo.model.User;
 import com.empresax.autonomo.service.ProductService;
 
 @RestController
@@ -30,7 +32,15 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping
-	public ResponseEntity<List<ProductResponse>> getUserProducts(@PathVariable(required = true) Long userId) { 
+	public ResponseEntity<List<ProductResponse>> getUserProducts(@PathVariable(required = true) Long userId, Authentication principal) { 
+		
+		User authenticatedUser = (User) principal.getPrincipal(); // current authenticated user (Principal)
+		
+		if (authenticatedUser.getId() != userId) {
+			
+			return ResponseEntity.badRequest().build();
+			
+		}
 		
 		List<ProductResponse> response = this.productService.getAllProducts(userId)
 				.stream()

@@ -6,48 +6,45 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.empresax.autonomo.model.User;
-import com.empresax.autonomo.service.UserService;
+import com.empresax.autonomo.security.JwtUtilService;
 
 @RestController
-@RequestMapping("/auth/login")
+@RequestMapping("/auth")
 public class AuthController {
 	
-	private final UserService userService;
+	@Autowired
+	private JwtUtilService jwtUtilService;
 	
 	@Autowired
-	public AuthController(UserService userService) {
-		this.userService = userService;
-	}
+	private AuthenticationManager authenticationManager; // bean provided in SecurityConfig.java (Spring cannot inject for itself)
 	
 	@PostMapping
-	public ResponseEntity<?> grantAccess(@Valid @RequestBody Login login) {
+	public ResponseEntity<?> signIn(@Valid @RequestBody Login login) {
+		
+		Authentication credentials = new UsernamePasswordAuthenticationToken(login.email, login.password);
 		
 		try {
 			
-			User userWithEmailPassed = this.userService.getUserByEmail(login.email);
+			Authentication principal = authenticationManager.authenticate(credentials);
+			String jwt = jwtUtilService.generate(principal);
 			
-			if(userWithEmailPassed.getPassword().equals(login.password)) {
-				
-				return ResponseEntity.ok(userWithEmailPassed);
-				
-			} 
+			return ResponseEntity.ok(jwt);
 			
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect credentials");
-		
-		} catch (Exception e) {
+		} catch (AuthenticationException e) {
 			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email do not exists");
+			return ResponseEntity.badRequest().build();
 			
 		}
-		
 		
 	}
 	
