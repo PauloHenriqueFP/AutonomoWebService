@@ -2,14 +2,12 @@ package com.empresax.autonomo.service;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.api.request.AddressRequest;
 import com.empresax.autonomo.api.request.ClientRequest;
-import com.empresax.autonomo.exception.NullEntityException;
+import com.empresax.autonomo.exception.ResourceNotFoundException;
 import com.empresax.autonomo.model.Address;
 import com.empresax.autonomo.model.Client;
 import com.empresax.autonomo.model.User;
@@ -35,7 +33,7 @@ public class ClientService {
 
 	public Client getClient(Long userId, Long clientId) {
 		return this.clientRepository.findByUserIdAndId(userId, clientId)
-				.orElseThrow(() -> new EntityNotFoundException("user with id " + userId + 
+				.orElseThrow(() -> new ResourceNotFoundException("user with id " + userId + 
 						" does not have a client with id: " + clientId ));
 	}
 	
@@ -63,7 +61,7 @@ public class ClientService {
 			
 		} catch (IllegalArgumentException e) {
 			
-			throw new NullEntityException("Error when saving a client for the user");
+			throw new ResourceNotFoundException("Error when saving a client for the user");
 			
 		}
 	}
@@ -85,7 +83,7 @@ public class ClientService {
 			return true;
 		}
 		else {
-			throw new RuntimeException("User with id " + userId + " does not have a client with id " + clientId);
+			throw new ResourceNotFoundException("User with id " + userId + " does not have a client with id " + clientId);
 		}
 				
 	}
@@ -97,7 +95,7 @@ public class ClientService {
 		Client oldClient = this.clientRepository.findByUserIdAndId(userId, clientId).get();
 		
 		if(oldClient == null) {
-			throw new RuntimeException("User with id " + userId + " does not have a client with id " + clientId + " to update");
+			throw new ResourceNotFoundException("User with id " + userId + " does not have a client with id " + clientId + " to update");
 		}
 		else {
 			  

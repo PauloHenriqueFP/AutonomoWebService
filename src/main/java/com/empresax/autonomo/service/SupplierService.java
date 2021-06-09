@@ -2,13 +2,11 @@ package com.empresax.autonomo.service;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.api.request.SupplierRequest;
-import com.empresax.autonomo.exception.NullEntityException;
+import com.empresax.autonomo.exception.ResourceNotFoundException;
 import com.empresax.autonomo.model.Address;
 import com.empresax.autonomo.model.Supplier;
 import com.empresax.autonomo.model.User;
@@ -33,14 +31,14 @@ public class SupplierService {
 		if(userExists) {
 			return this.supplierRepository.findAllByUserId(userId);			
 		} else {
-			throw new RuntimeException("User with id " + userId + "was not found.");		
+			throw new ResourceNotFoundException("User with id " + userId + "was not found.");		
 		}
 	}
 	
 	public Supplier getSupplier(Long userId, Long supplierId) {
 		return this.supplierRepository.findByUserIdAndId(userId, supplierId)
 				.orElseThrow (
-						() -> new EntityNotFoundException("user with id " + userId +
+						() -> new ResourceNotFoundException("user with id " + userId +
 								" does not have a provider with id: " + supplierId)
 				);
 	}
@@ -70,7 +68,7 @@ public class SupplierService {
 			
 		} catch (IllegalArgumentException e) {
 			
-			throw new NullEntityException("Empty supplier");
+			throw new RuntimeException("Empty supplier");
 			
 		}
 	}
@@ -82,7 +80,7 @@ public class SupplierService {
 		if(user != null) {
 			Supplier supplier = this.supplierRepository.findByUserIdAndId(userId, supplierId)
 					.orElseThrow( () -> 
-						new RuntimeException("User with id " + userId + " does not have a supplier with id " + supplierId + " to delete")
+						new ResourceNotFoundException("User with id " + userId + " does not have a supplier with id " + supplierId + " to delete")
 					);
 			
 			this.supplierRepository.delete(supplier);

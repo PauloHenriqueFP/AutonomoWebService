@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.api.request.ProductRequest;
+import com.empresax.autonomo.exception.ResourceNotFoundException;
 import com.empresax.autonomo.model.Product;
 import com.empresax.autonomo.model.Supplier;
 import com.empresax.autonomo.model.User;
@@ -36,13 +37,13 @@ public class ProductService {
 		if(userExists) {
 			return this.productRepository.findAllByUserId(userId);	
 		} else {
-			throw new RuntimeException("User with id " + userId + " was not found");
+			throw new ResourceNotFoundException("User with id " + userId + " was not found");
 		}
 	}
 	
 	public Product getProduct(Long userId, Long productId) {
 		return this.productRepository.findByUserIdAndId(userId, productId)
-				.orElseThrow(() -> new RuntimeException(
+				.orElseThrow(() -> new ResourceNotFoundException(
 						"User with id " + userId + " does not have the product with the id: " + productId));
 	}
 	
@@ -114,7 +115,7 @@ public class ProductService {
 			
 		}
 		else {
-			throw new RuntimeException("User with id " + userId + " does not have a product with id " + productId);
+			throw new ResourceNotFoundException("User with id " + userId + " does not have a product with id " + productId);
 		}
 	}
 	
@@ -123,11 +124,11 @@ public class ProductService {
 		
 		if(userExists) {
 			Product productToDelete = this.productRepository.findByUserIdAndId(userId, productId)
-					.orElseThrow(() -> new RuntimeException(
+					.orElseThrow(() -> new ResourceNotFoundException(
 							"User with id " + userId + " does not have a product with id " + productId + " to delete"));
 			this.productRepository.delete(productToDelete);
 		} else {
-			throw new RuntimeException("User with id" + userId + " does not exists");
+			throw new ResourceNotFoundException("User with id" + userId + " does not exists");
 		}
 	}
 		
