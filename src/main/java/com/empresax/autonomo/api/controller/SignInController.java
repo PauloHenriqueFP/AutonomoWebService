@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresax.autonomo.security.JwtUtilService;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/signIn")
+public class SignInController {
 	
 	@Autowired
 	private JwtUtilService jwtUtilService;
