@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/signIn").permitAll()
+			.antMatchers(HttpMethod.POST, "/signIn", "/signUp").permitAll()
 			.antMatchers("/users/{userId}/**").access("@userSecurity.hasUserId(authentication,#userId)")
 			.anyRequest().authenticated()
 			.and().csrf().disable()

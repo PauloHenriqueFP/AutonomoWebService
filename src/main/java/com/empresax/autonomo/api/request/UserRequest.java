@@ -4,6 +4,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Getter;
 
 @Getter
@@ -16,6 +18,6 @@ public class UserRequest {
 	private String email;
 	
 	@NotBlank
-	@Min(value = 6L)
+	@Length(min = 3)
 	private String password; 
 }
