@@ -3,6 +3,7 @@ package com.empresax.autonomo.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/auth").permitAll()
+			.antMatchers(HttpMethod.POST, "/signIn").permitAll()
 			.antMatchers("/users/{userId}/**").access("@userSecurity.hasUserId(authentication,#userId)")
 			.anyRequest().authenticated()
 			.and().csrf().disable()
