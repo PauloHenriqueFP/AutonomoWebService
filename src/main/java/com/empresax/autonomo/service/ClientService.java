@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.empresax.autonomo.api.request.AddressRequest;
 import com.empresax.autonomo.api.request.ClientRequest;
 import com.empresax.autonomo.exception.ResourceNotFoundException;
+import com.empresax.autonomo.exception.SaveEntityException;
 import com.empresax.autonomo.model.Address;
 import com.empresax.autonomo.model.Client;
 import com.empresax.autonomo.model.User;
@@ -61,7 +62,7 @@ public class ClientService {
 			
 		} catch (IllegalArgumentException e) {
 			
-			throw new ResourceNotFoundException("Error when saving a client for the user");
+			throw new SaveEntityException("Error when saving a client for the user " + userId);
 			
 		}
 	}
@@ -126,7 +127,7 @@ public class ClientService {
 				
 			} catch (Exception e) {
 				
-				throw new RuntimeException("Error when trying to save the client:\n" + e.getStackTrace());
+				throw new SaveEntityException("Error when trying to save the client");
 				
 			}
 		}

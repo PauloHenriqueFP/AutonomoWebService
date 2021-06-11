@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.api.request.SupplierRequest;
 import com.empresax.autonomo.exception.ResourceNotFoundException;
+import com.empresax.autonomo.exception.SaveEntityException;
 import com.empresax.autonomo.model.Address;
 import com.empresax.autonomo.model.Supplier;
 import com.empresax.autonomo.model.User;
@@ -68,7 +69,7 @@ public class SupplierService {
 			
 		} catch (IllegalArgumentException e) {
 			
-			throw new RuntimeException("Empty supplier");
+			throw new SaveEntityException("Empty supplier");
 			
 		}
 	}

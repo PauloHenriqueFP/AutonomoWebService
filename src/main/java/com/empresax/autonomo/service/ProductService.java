@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.empresax.autonomo.api.request.ProductRequest;
 import com.empresax.autonomo.exception.ResourceNotFoundException;
+import com.empresax.autonomo.exception.SaveEntityException;
 import com.empresax.autonomo.model.Product;
 import com.empresax.autonomo.model.Supplier;
 import com.empresax.autonomo.model.User;
@@ -69,9 +70,12 @@ public class ProductService {
 					user,
 					supplier
 				);
-		
-		Product savedProduct = this.productRepository.save(newProduct);
-		return savedProduct;
+		try {
+			Product savedProduct = this.productRepository.save(newProduct);
+			return savedProduct;			
+		} catch (Exception e) {
+			throw new SaveEntityException("Error trying to save the product");
+		}
 		
 	}
 	

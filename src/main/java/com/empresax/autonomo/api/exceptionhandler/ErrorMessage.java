@@ -1,10 +1,10 @@
 package com.empresax.autonomo.api.exceptionhandler;
 
-public class ErrorMessageNotFound {
+public class ErrorMessage {
 	
 	private String cause;
 	
-	public ErrorMessageNotFound(String cause) {
+	public ErrorMessage(String cause) {
 		this.cause = cause;
 	}
 	

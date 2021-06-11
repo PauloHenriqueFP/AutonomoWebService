@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.empresax.autonomo.exception.ResourceNotFoundException;
 import com.empresax.autonomo.model.User;
 import com.empresax.autonomo.repository.UserRepository;
 
@@ -28,7 +29,7 @@ public class UserService {
 	
 	public User getUserById(Long id) throws RuntimeException {
 		return this.userRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("User with id " + id + " was not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " was not found"));
 	}
 	
 	public User getUserByEmail(String email) throws Exception {
