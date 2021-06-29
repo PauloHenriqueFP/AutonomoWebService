@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String bearerToken = request.getHeader("Authorization");
-		
+
 		TokenValidation tokenValidation = isTokenValid(bearerToken);
 		
 		if(tokenValidation.isValid) {

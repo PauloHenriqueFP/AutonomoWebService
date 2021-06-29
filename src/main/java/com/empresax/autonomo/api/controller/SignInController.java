@@ -37,8 +37,9 @@ public class SignInController {
 			
 			Authentication principal = authenticationManager.authenticate(credentials);
 			String jwt = jwtUtilService.generate(principal);
-			
-			return ResponseEntity.ok(jwt);
+			var token = new JwtToken();
+			token.setValue(jwt);
+			return ResponseEntity.ok(token);
 			
 		} catch (AuthenticationException e) {
 			
@@ -59,3 +60,17 @@ public class SignInController {
 	@NotBlank
 	public String password;
 }
+ 
+ class JwtToken {
+	 private String value;
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+	 
+	 
+ }
